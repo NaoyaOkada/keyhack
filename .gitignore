@@ -1,0 +1,17 @@
+_config.py
+_config_personal.py
+configEmacs.py
+config_emacs_oldver.py
+config_original.py
+dict/
+doc/
+extension/
+keyhac.exe
+keyhac.ini
+lib/
+library.zip
+license/
+python38.dll
+readme_en.txt
+readme_ja.txt
+theme/
