@@ -1,0 +1,3 @@
+# 現在読み込んでいるconfig.pyについて
+originalは同フォルダにあるconfigEmacs.pyであるがいらない設定と640行目付近のwindows切り替え時のhookメソッドが遅いので削除してある。
+
