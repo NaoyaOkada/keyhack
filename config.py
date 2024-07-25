@@ -25,6 +25,7 @@ from keyhac import *
 def configure(keymap):
     keymap_global = keymap.defineWindowKeymap()
     keymap_global["O-RCtrl"] = "29" # 無変換キーにはIME OFFをOSで割り当て
+    keymap_global["O-(255)"] = "28" # 無変換キーにはIME ONをOSで割り当て
 
     ####################################################################################################
     ## 初期設定
