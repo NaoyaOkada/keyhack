@@ -9,11 +9,11 @@
 fakeymacs_version = "20230111_01"
 
 import time
-import os.path
+# import os.path
 import re
 import fnmatch
 import copy
-import datetime
+# import datetime
 import ctypes
 import pyauto
 import winreg
@@ -25,7 +25,7 @@ from keyhac import *
 def configure(keymap):
     keymap_global = keymap.defineWindowKeymap()
     keymap_global["O-RCtrl"] = "29" # 無変換キーにはIME OFFをOSで割り当て
-    keymap_global["O-(255)"] = "28" # 無変換キーにはIME ONをOSで割り当て
+    keymap_global["O-(255)"] = "28" # 変換キーにはIME ONをOSで割り当て
 
     ####################################################################################################
     ## 初期設定
@@ -77,20 +77,20 @@ def configure(keymap):
 
         return config_section
 
-    def readConfigExtension(config_file, msg=True):
-        try:
-            with open(dataPath() + r"\fakeymacs_extensions\\" + config_file, "r", encoding="utf-8-sig") as f:
-                config_extension = f.read()
-        except:
-            if msg:
-                print(f"拡張機能ファイル {config_file} の読み込みに失敗しました")
-            config_extension = ""
+    # def readConfigExtension(config_file, msg=True):
+    #     try:
+    #         with open(dataPath() + r"\fakeymacs_extensions\\" + config_file, "r", encoding="utf-8-sig") as f:
+    #             config_extension = f.read()
+    #     except:
+    #         if msg:
+    #             print(f"拡張機能ファイル {config_file} の読み込みに失敗しました")
+    #         config_extension = ""
 
-        return config_extension
+    #     return config_extension
 
-    def startupString():
-        startup_string_formatter = "Fakeymacs version {}:\n  https://github.com/smzht/fakeymacs\n"
-        return startup_string_formatter.format(fakeymacs_version)
+    # def startupString():
+    #     startup_string_formatter = "Fakeymacs version {}:\n  https://github.com/smzht/fakeymacs\n"
+    #     return startup_string_formatter.format(fakeymacs_version)
 
     # 個人設定ファイルのセクション [section-init] を読み込んで実行する
     exec(readConfigPersonal("[section-init]"), dict(globals(), **locals()))
@@ -102,7 +102,7 @@ def configure(keymap):
 
     # IMEの設定（次の設定のいずれかを有効にする）
     # fc.ime = "old_Microsoft_IME"
-    fc.ime = "new_Microsoft_IME"
+    # fc.ime = "new_Microsoft_IME"
     # fc.ime = "Google_IME"
     # fc.ime = None
 
@@ -278,11 +278,11 @@ def configure(keymap):
 
     # clipboard 監視の対象外とするアプリケーションソフトを指定する
     fc.not_clipboard_target = []
-    fc.not_clipboard_target += ["EXCEL.EXE"] # Microsoft Excel
+    # fc.not_clipboard_target += ["EXCEL.EXE"] # Microsoft Excel
 
     # clipboard 監視の対象外とするウィンドウのクラスネームを指定する（ワイルドカードの指定可）
     fc.not_clipboard_target_class = []
-    fc.not_clipboard_target_class += ["HwndWrapper*"] # WPF アプリ
+    # fc.not_clipboard_target_class += ["HwndWrapper*"] # WPF アプリ
 
     # 左右どちらの Ctrl キーを使うかを指定する（"L": 左、"R": 右）
     fc.side_of_ctrl_key = "L"
@@ -294,7 +294,7 @@ def configure(keymap):
     fc.side_of_win_key = "L"
 
     # C-i キーを Tab キーとして使うかどうかを指定する（True: 使う、False: 使わない）
-    fc.use_ctrl_i_as_tab = True
+    fc.use_ctrl_i_as_tab = False
 
     # Esc キーを Meta キーとして使うかどうかを指定する（True: 使う、False: 使わない）
     # （True（Meta キーとして使う）に設定されている場合、ESC の二回押下で ESC が入力されます）
@@ -305,11 +305,11 @@ def configure(keymap):
     fc.ctl_x_prefix_key = "C-x"
 
     # スクロールに使うキーの組み合わせ（Up、Down の順）を指定する
-    # fc.scroll_key = None # PageUp、PageDown キーのみを利用する
-    fc.scroll_key = ["M-v", "C-v"]
+    fc.scroll_key = None # PageUp、PageDown キーのみを利用する
+    # fc.scroll_key = ["M-v", "C-v"]
 
     # Emacs 日本語入力モードを使うかどうかを指定する（True: 使う、False: 使わない）
-    fc.use_emacs_ime_mode = True
+    fc.use_emacs_ime_mode = False
 
     # Emacs 日本語入力モードが有効なときに表示するバルーンメッセージを指定する
     fc.emacs_ime_mode_balloon_message = None
@@ -322,22 +322,22 @@ def configure(keymap):
     fc.ime_status_balloon_message = ["[A]", "[あ]"]
 
     # IME をトグルで切り替えるキーを指定する（複数指定可）
-    fc.toggle_input_method_key = []
-    fc.toggle_input_method_key += ["C-Yen"]
-    fc.toggle_input_method_key += ["C-o"]
+    # fc.toggle_input_method_key = []
+    # fc.toggle_input_method_key += ["C-Yen"]
+    # fc.toggle_input_method_key += ["C-o"]
     # fc.toggle_input_method_key += ["O-LAlt"]
 
     #---------------------------------------------------------------------------------------------------
     # IME を切り替えるキーの組み合わせ（disable、enable の順）を指定する（複数指定可）
     # （toggle_input_method_key のキー設定より優先します）
-    fc.set_input_method_key = []
+    # fc.set_input_method_key = []
 
     ## 日本語キーボードを利用している場合、<無変換> キーで英数入力、<変換> キーで日本語入力となる
-    fc.set_input_method_key += [["(29)", "(28)"]]
+    # fc.set_input_method_key += [["(29)", "(28)"]]
 
     ## 日本語キーボードを利用している場合、<Ａ> キーで英数入力、<あ> キーで日本語入力となる
     ## （https://docs.microsoft.com/ja-jp/windows-hardware/design/component-guidelines/keyboard-japan-ime）
-    fc.set_input_method_key += [["(26)", "(22)"]]
+    # fc.set_input_method_key += [["(26)", "(22)"]]
 
     ## LAlt の単押しで英数入力、RAlt の単押しで日本語入力となる
     ## （JetBrains 製の IDE でこの設定を利用するためには、ツールボタンをオンにする必要があるようです。
@@ -362,39 +362,39 @@ def configure(keymap):
     ##   が正常に動作しないアプリケーションソフト（Microsoft Excel、Sakura Editor など）があります。
     ##   ただし、C-Back キーは設定しないでください。）
     ## （リージョンを選択した状態で Space キーを押下すると「再変換」が機能します）
-    fc.reconversion_key = []
-    fc.reconversion_key += ["C-,"]    # Comma は < のキーでもあり、変換を戻すイメージを持てるので採用
+    # fc.reconversion_key = []
+    # fc.reconversion_key += ["C-,"]    # Comma は < のキーでもあり、変換を戻すイメージを持てるので採用
     # fc.reconversion_key += ["(28)"]   # <変換> キーを利用する場合でも、本機能を全て使うためには設定が必要
     # fc.reconversion_key += ["O-RAlt"] # ワンショットモディファイアの指定も可能
 
     ## IME に設定してある「再変換」、「確定取り消し」を行うキーを指定する
 
     ## Windows 10 1909 以前の Microsoft IME の場合
-    if fc.ime == "old_Microsoft_IME":
-        fc.ime_reconv_key = "W-/"    # 「再変換」キー
-        fc.ime_cancel_key = "C-Back" # 「確定の取り消し」キー
-        fc.ime_reconv_region = False # 「再変換」の時にリージョンの選択が必要かどうかを指定する
+    # if fc.ime == "old_Microsoft_IME":
+    #    fc.ime_reconv_key = "W-/"    # 「再変換」キー
+    #    fc.ime_cancel_key = "C-Back" # 「確定の取り消し」キー
+    #    fc.ime_reconv_region = False # 「再変換」の時にリージョンの選択が必要かどうかを指定する
 
     ## Windows 10 2004 以降の 新しい Microsoft IME の場合
     ## （新しい Microsoft IME には確定取り消し（C-Backspace）の設定が無いようなので、「再変換」のキー
     ##   を設定しています）
-    elif fc.ime == "new_Microsoft_IME":
-        fc.ime_reconv_key = "W-/"    # 「再変換」キー
-        fc.ime_cancel_key = "W-/"    # 「確定の取り消し」キー
-        fc.ime_reconv_region = False # 「再変換」の時にリージョンの選択が必要かどうかを指定する
+    # elif fc.ime == "new_Microsoft_IME":
+    #     fc.ime_reconv_key = "W-/"    # 「再変換」キー
+    #     fc.ime_cancel_key = "W-/"    # 「確定の取り消し」キー
+    #     fc.ime_reconv_region = False # 「再変換」の時にリージョンの選択が必要かどうかを指定する
 
-    ## Google 日本語入力の場合
-    elif fc.ime == "Google_IME":
-        fc.ime_reconv_key = "W-/"    # 「再変換」キー
-        fc.ime_cancel_key = "C-Back" # 「確定の取り消し」キー
-        fc.ime_reconv_region = True  # 「再変換」の時にリージョンの選択が必要かどうかを指定する
+    # ## Google 日本語入力の場合
+    # elif fc.ime == "Google_IME":
+    #     fc.ime_reconv_key = "W-/"    # 「再変換」キー
+    #     fc.ime_cancel_key = "C-Back" # 「確定の取り消し」キー
+    #     fc.ime_reconv_region = True  # 「再変換」の時にリージョンの選択が必要かどうかを指定する
 
-    ## 上記以外の場合の場合（機能を無効にする）
-    else:
-        fc.reconversion_key = []
-        fc.ime_reconv_key = None
-        fc.ime_cancel_key = None
-        fc.ime_reconv_region = False
+    # ## 上記以外の場合の場合（機能を無効にする）
+    # else:
+    #     fc.reconversion_key = []
+    #     fc.ime_reconv_key = None
+    #     fc.ime_cancel_key = None
+    #     fc.ime_reconv_region = False
     #---------------------------------------------------------------------------------------------------
 
     #---------------------------------------------------------------------------------------------------
@@ -402,44 +402,44 @@ def configure(keymap):
     # （置き換え先、置き換え元）を指定する
     # （「ことえり」のキーバインドを利用するための設定例です。Google 日本語入力で「ことえり」の
     #   キー設定になっている場合には不要ですが、設定を行っていても問題はありません。）
-    fc.emacs_ime_mode_key = []
-    fc.emacs_ime_mode_key += [["C-i", "S-Left"],  # 文節を縮める
-                              ["C-o", "S-Right"], # 文節を伸ばす
-                              ["C-j", "F6"],      # ひらがなに変換
-                              ["C-k", "F7"],      # 全角カタカナに変換
-                              ["C-l", "F9"],      # 全角英数に表示切替
-                              ["C-;", "F8"]]      # 半角に変換
+    # fc.emacs_ime_mode_key = []
+    # fc.emacs_ime_mode_key += [["C-i", "S-Left"],  # 文節を縮める
+    #                           ["C-o", "S-Right"], # 文節を伸ばす
+    #                           ["C-j", "F6"],      # ひらがなに変換
+    #                           ["C-k", "F7"],      # 全角カタカナに変換
+    #                           ["C-l", "F9"],      # 全角英数に表示切替
+    #                           ["C-;", "F8"]]      # 半角に変換
 
-    if is_japanese_keyboard:
-        fc.emacs_ime_mode_key += [["C-:", "F10"]] # 半角英数に表示切替
-    else:
-        fc.emacs_ime_mode_key += [["C-'", "F10"]] # 半角英数に表示切替
+    # if is_japanese_keyboard:
+    #     fc.emacs_ime_mode_key += [["C-:", "F10"]] # 半角英数に表示切替
+    # else:
+    #     fc.emacs_ime_mode_key += [["C-'", "F10"]] # 半角英数に表示切替
     #---------------------------------------------------------------------------------------------------
 
     #---------------------------------------------------------------------------------------------------
     # IME の「単語登録」プログラムを利用するための設定を行う
 
     ## IME の「単語登録」プログラムを起動するキーを指定する
-    # fc.word_register_key = None
-    fc.word_register_key = "C-]"
+    fc.word_register_key = None
+    # fc.word_register_key = "C-]"
 
     ## IME の「単語登録」プログラムとそのパラメータを指定する
 
     ## Microsoft IME の場合
-    if fc.ime in ["old_Microsoft_IME", "new_Microsoft_IME"]:
-        fc.word_register_name = r"C:\Windows\System32\IME\IMEJP\IMJPDCT.EXE"
-        fc.word_register_param = ""
+    # if fc.ime in ["old_Microsoft_IME", "new_Microsoft_IME"]:
+    #     fc.word_register_name = r"C:\Windows\System32\IME\IMEJP\IMJPDCT.EXE"
+    #     fc.word_register_param = ""
 
-    ## Google 日本語入力の場合
-    elif fc.ime == "Google_IME":
-        fc.word_register_name = r"C:\Program Files (x86)\Google\Google Japanese Input\GoogleIMEJaTool.exe"
-        fc.word_register_param = "--mode=word_register_dialog"
+    # ## Google 日本語入力の場合
+    # elif fc.ime == "Google_IME":
+    #     fc.word_register_name = r"C:\Program Files (x86)\Google\Google Japanese Input\GoogleIMEJaTool.exe"
+    #     fc.word_register_param = "--mode=word_register_dialog"
 
-    ## 上記以外の場合の場合（機能を無効にする）
-    else:
-        fc.word_register_key = None
-        fc.word_register_name = None
-        fc.word_register_param = None
+    # ## 上記以外の場合の場合（機能を無効にする）
+    # else:
+    #     fc.word_register_key = None
+    #     fc.word_register_name = None
+    #     fc.word_register_param = None
     #---------------------------------------------------------------------------------------------------
 
     # Emacs キーバインドを切り替えるキーを指定する
@@ -449,7 +449,8 @@ def configure(keymap):
     # （fc.emacs_target_class 変数に指定したクラス（初期値：Edit）に該当するアプリケーションソフト
     #   （Windows10版 Notepad など）は、Emacs キーバインドを切り替えの対象となりません（常に Emacs
     #   キーバインドとなります）。）
-    fc.toggle_emacs_keybind_key = "C-S-Space"
+    # fc.toggle_emacs_keybind_key = "C-S-Space"
+    fc.toggle_emacs_keybind_key = None
 
     # アプリケーションキーとして利用するキーを指定する
     # （修飾キーに Alt は使えないようです）
@@ -467,7 +468,7 @@ def configure(keymap):
     fc.use_alt_shift_digit_key_for_f13_to_f24 = False
 
     # 表示しているウィンドウの中で、一番最近までフォーカスがあったウィンドウに移動するキーを指定する
-    fc.other_window_key = "A-o"
+    # fc.other_window_key = "A-o"
 
     # アクティブウィンドウを切り替えるキーの組み合わせ（前、後 の順）を指定する（複数指定可）
     # （A-Esc キーの動作とは異なり、仮想デスクトップを跨ぎ、最小化されていないウィンドウを順に切り替え
@@ -478,36 +479,36 @@ def configure(keymap):
     #     (define-key key-translation-map (kbd "M-S-n") (kbd "M-n"))
     #  ）
     fc.window_switching_key = []
-    fc.window_switching_key += [["A-p", "A-n"]]
+    # fc.window_switching_key += [["A-p", "A-n"]]
     # fc.window_switching_key += [["A-S-p", "A-S-n"]]
     # fc.window_switching_key += [["A-Up", "A-Down"]]
 
     # アクティブウィンドウをディスプレイ間で移動するキーの組み合わせ（前、後 の順）を指定する（複数指定可）
     # （デフォルトキーは、["W-S-Left", "W-S-Right"]）
     fc.window_movement_key_for_displays = []
-    fc.window_movement_key_for_displays += [[None, "W-o"]]
+    # fc.window_movement_key_for_displays += [[None, "W-o"]]
     # fc.window_movement_key_for_displays += [[None, "A-S-o"]]
 
     # デュアルディスプレイにそれぞれ表示されているウィンドウを入れ替えるキーを指定する
-    fc.transpose_windows_key = "W-t"
+    # fc.transpose_windows_key = "W-t"
 
     # ウィンドウを最大化、リストアするキーの組み合わせ（リストア、最大化 の順）を指定する（複数指定可）
     # （マルチディスプレイでの最大化にも対応しています）
     fc.window_maximize_key = []
-    fc.window_maximize_key += [["W-S-q", "W-q"]] # Windows ショートカットキーの W-q の機能は、W-s で代用可
+    # fc.window_maximize_key += [["W-S-q", "W-q"]] # Windows ショートカットキーの W-q の機能は、W-s で代用可
     # fc.window_maximize_key += [["W-S-m", "W-m"]] # Windows ショートカットキーの W-m の機能は、W-d で代用可
     # fc.window_maximize_key += [["W-S-s", "W-s"]] # Windows ショートカットキーの W-s の機能は、W-q で代用可
 
     # ウィンドウを最小化、リストアするキーの組み合わせ（リストア、最小化 の順）を指定する（複数指定可）
     fc.window_minimize_key = []
-    fc.window_minimize_key += [["A-S-m", "A-m"]]
+    # fc.window_minimize_key += [["A-S-m", "A-m"]]
 
     # 仮想デスクトップを切り替えるキーの組み合わせ（前、後 の順）を指定する（複数指定可）
     # （仮想デスクトップを切り替えた際にフォーカスのあるウィンドウを適切に処理するため、設定するキーは
     #   Win キーとの組み合わせとしてください）
     # （デフォルトキーは、["W-C-Left", "W-C-Right"]）
     fc.desktop_switching_key = []
-    fc.desktop_switching_key += [["W-b", "W-f"]]
+    # fc.desktop_switching_key += [["W-b", "W-f"]]
     # fc.desktop_switching_key += [["W-Left", "W-Right"]]
 
     # アクティブウィンドウを仮想デスクトップ間で移動するキーの組み合わせ（前、後 の順）を指定する（複数指定可）
@@ -525,23 +526,23 @@ def configure(keymap):
     # “クラス名称”を指定する
     # （re.match 関数（先頭からのマッチ）の正規表現に「|」を使って繋げて指定してください。
     #   完全マッチとするためには $ の指定が必要です。）
-    fc.window_operation_exclusion_class = r"Progman$"
+    # fc.window_operation_exclusion_class = r"Progman$"
 
     # ウィンドウ操作（other_window、restore_window など）の対象としたくないアプリケーションソフトの
     # “プロセス名称”を指定する
     # （re.match 関数（先頭からのマッチ）の正規表現に「|」を使って繋げて指定してください。
     #   完全マッチとするためには $ の指定が必要です。）
-    fc.window_operation_exclusion_process = r"RocketDock\.exe$"  # サンプルとして RocketDock.exe を登録
+    # fc.window_operation_exclusion_process = r"RocketDock\.exe$"  # サンプルとして RocketDock.exe を登録
 
     # クリップボードリストを起動するキーを指定する
-    fc.clipboardList_key = "A-y"
+    # fc.clipboardList_key = "A-y"
 
     # ランチャーリストを起動するキーを指定する
-    fc.lancherList_key = "A-l"
+    # fc.lancherList_key = "A-l"
 
     # shell_command 関数で起動するアプリケーションソフトを指定する
     # （PATH が通っていない場所にあるコマンドは、絶対パスで指定してください）
-    fc.command_name = r"cmd.exe"
+    # fc.command_name = r"cmd.exe"
 
     # コマンドのリピート回数の最大値を指定する
     fc.repeat_max = 1024
@@ -555,18 +556,21 @@ def configure(keymap):
     # 組み合わせ（ワイルドカード指定可））を指定する
     # （Microsoft Word 等では画面に Ctrl ボタンが表示され、Ctrl キーの単押しによりサブウインドウが
     #   開く機能があります。その挙動を抑制するアプリケーションソフトのリストを指定してください。）
-    fc.ctrl_button_app_list = [["WINWORD.EXE",  "_WwG"],
-                               ["EXCEL.EXE",    "EXCEL*"],
-                               ["POWERPNT.EXE", "mdiClass"],
-                               ]
+    # fc.ctrl_button_app_list = [["WINWORD.EXE",  "_WwG"],
+    #                            ["EXCEL.EXE",    "EXCEL*"],
+    #                            ["POWERPNT.EXE", "mdiClass"],
+    #                            ]
+    fc.ctrl_button_app_list = []
+                               
 
     # ゲームなど、キーバインドの設定を極力行いたくないアプリケーションソフトを指定する
     # （keymap_global 以外のすべてのキーマップをスルーします。ゲームなど、Keyhac によるキー設定と
     #   相性が悪いアプリケーションソフトを指定してください。keymap_base の設定もスルーするため、
     #   英語 -> 日本語キーボード変換の機能が働かなくなることにご留意ください。）
-    fc.game_app_list        = ["ffxiv_dx11.exe",         # FINAL FANTASY XIV
-                               ]
-
+    # fc.game_app_list        = ["ffxiv_dx11.exe",         # FINAL FANTASY XIV
+    #                            ]
+    fc.game_app_list          = []
+                               
     # 個人設定ファイルのセクション [section-base-1] を読み込んで実行する
     exec(readConfigPersonal("[section-base-1]"), dict(globals(), **locals()))
 
@@ -873,69 +877,69 @@ def configure(keymap):
     fakeymacs.reverse_window_to_restore = False
 
     # Ctl-x プレフィックスキーを構成するキーの仮想キーコードを設定する
-    if fc.ctl_x_prefix_key:
-        keyCondition = usjisFilter(keyhac_keymap.KeyCondition.fromString, fc.ctl_x_prefix_key)
+    # if fc.ctl_x_prefix_key:
+    #     keyCondition = usjisFilter(keyhac_keymap.KeyCondition.fromString, fc.ctl_x_prefix_key)
 
-        if keyCondition.mod == keyhac_keymap.MODKEY_CTRL:
-            if fc.side_of_ctrl_key == "L":
-                ctl_x_prefix_vkey = [VK_LCONTROL, keyCondition.vk]
-            else:
-                ctl_x_prefix_vkey = [VK_RCONTROL, keyCondition.vk]
+    #     if keyCondition.mod == keyhac_keymap.MODKEY_CTRL:
+    #         if fc.side_of_ctrl_key == "L":
+    #             ctl_x_prefix_vkey = [VK_LCONTROL, keyCondition.vk]
+    #         else:
+    #             ctl_x_prefix_vkey = [VK_RCONTROL, keyCondition.vk]
 
-        elif keyCondition.mod == keyhac_keymap.MODKEY_ALT:
-            if fc.side_of_alt_key == "L":
-                ctl_x_prefix_vkey = [VK_LMENU, keyCondition.vk]
-            else:
-                ctl_x_prefix_vkey = [VK_RMENU, keyCondition.vk]
-        else:
-            print("Ctl-x プレフィックスキーのモディファイアキーは、Ctrl または Alt のいずれかから指定してください")
+    #     elif keyCondition.mod == keyhac_keymap.MODKEY_ALT:
+    #         if fc.side_of_alt_key == "L":
+    #             ctl_x_prefix_vkey = [VK_LMENU, keyCondition.vk]
+    #         else:
+    #             ctl_x_prefix_vkey = [VK_RMENU, keyCondition.vk]
+    #     else:
+    #         print("Ctl-x プレフィックスキーのモディファイアキーは、Ctrl または Alt のいずれかから指定してください")
 
     ##################################################
     ## Emacs キーバインドの切り替え
     ##################################################
 
-    def toggle_emacs_keybind():
-        class_name   = keymap.getWindow().getClassName()
-        process_name = keymap.getWindow().getProcessName()
+    # def toggle_emacs_keybind():
+    #     class_name   = keymap.getWindow().getClassName()
+    #     process_name = keymap.getWindow().getProcessName()
 
-        if (class_name not in fc.emacs_target_class and
-            process_name not in fc.not_emacs_target):
-            if process_name in fakeymacs.not_emacs_keybind:
-                fakeymacs.not_emacs_keybind.remove(process_name)
-                keymap.popBalloon("keybind", "[Enable Emacs keybind]", 1000)
-            else:
-                fakeymacs.not_emacs_keybind.append(process_name)
-                keymap.popBalloon("keybind", "[Disable Emacs keybind]", 1000)
+    #     if (class_name not in fc.emacs_target_class and
+    #         process_name not in fc.not_emacs_target):
+    #         if process_name in fakeymacs.not_emacs_keybind:
+    #             fakeymacs.not_emacs_keybind.remove(process_name)
+    #             keymap.popBalloon("keybind", "[Enable Emacs keybind]", 1000)
+    #         else:
+    #             fakeymacs.not_emacs_keybind.append(process_name)
+    #             keymap.popBalloon("keybind", "[Disable Emacs keybind]", 1000)
 
-            keymap.updateKeymap()
+    #         keymap.updateKeymap()
 
     ##################################################
     ## IME の操作
     ##################################################
 
-    def enable_input_method():
-        set_input_method(1)
+    # def enable_input_method():
+    #     set_input_method(1)
 
-    def disable_input_method():
-        set_input_method(0)
+    # def disable_input_method():
+    #     set_input_method(0)
 
-    def toggle_input_method():
-        set_input_method(getImeStatus() ^ 1)
+    # def toggle_input_method():
+    #     set_input_method(getImeStatus() ^ 1)
 
-    def set_input_method(ime_status):
-        correctImeStatus()
+    # def set_input_method(ime_status):
+    #     correctImeStatus()
 
-        if getImeStatus() != ime_status:
-            # IME を切り替える
-            # （setImeStatus(ime_status) を使わないのは、キーボードマクロの再生時に影響がでるため）
-            # self_insert_command("A-(25)")() # 日本語キーボードで PowerShell を使った際に @ が
-            #                                 # 表示されるため、次行に変更
-            self_insert_command("(244)")()
+    #     if getImeStatus() != ime_status:
+    #         # IME を切り替える
+    #         # （setImeStatus(ime_status) を使わないのは、キーボードマクロの再生時に影響がでるため）
+    #         # self_insert_command("A-(25)")() # 日本語キーボードで PowerShell を使った際に @ が
+    #         #                                 # 表示されるため、次行に変更
+    #         self_insert_command("(244)")()
 
-            if fakeymacs.is_playing_kmacro:
-                delay(0.2)
+    #         if fakeymacs.is_playing_kmacro:
+    #             delay(0.2)
 
-        showImeStatus(ime_status)
+    #     showImeStatus(ime_status)
 
     def getImeStatus():
         return keymap.getWindow().getImeStatus()
@@ -1007,22 +1011,22 @@ def configure(keymap):
     ## ファイル操作
     ##################################################
 
-    def find_file():
-        self_insert_command("C-o")()
+    # def find_file():
+    #     self_insert_command("C-o")()
 
-    def save_buffer():
-        self_insert_command("C-s")()
+    # def save_buffer():
+    #     self_insert_command("C-s")()
 
-    def write_file():
-        # https://www.sriproot.net/blog/ctrl-shift-s-saveas-922
-        # self_insert_command("C-S-s")()
+    # # def write_file():
+    # #     # https://www.sriproot.net/blog/ctrl-shift-s-saveas-922
+    # #     # self_insert_command("C-S-s")()
 
-        self_insert_command("A-f")()
-        delay()
-        self_insert_command("a")()
+    # #     self_insert_command("A-f")()
+    # #     delay()
+    # #     self_insert_command("a")()
 
-    def dired():
-        keymap.ShellExecuteCommand(None, r"explorer.exe", "", "")()
+    # def dired():
+    #     keymap.ShellExecuteCommand(None, r"explorer.exe", "", "")()
 
     ##################################################
     ## カーソル移動
@@ -1058,29 +1062,29 @@ def configure(keymap):
             if fakeymacs.is_marked:
                 self_insert_command("Left")()
 
-    def beginning_of_buffer():
-        self_insert_command("C-Home")()
+    # def beginning_of_buffer():
+    #     self_insert_command("C-Home")()
 
-    def end_of_buffer():
-        self_insert_command("C-End")()
+    # def end_of_buffer():
+    #     self_insert_command("C-End")()
 
-    def goto_line():
-        if (checkWindow("sakura.exe", "EditorClient") or # Sakura Editor
-            checkWindow("sakura.exe", "SakuraView*")):   # Sakura Editor
-            self_insert_command3("C-j")()
-        else:
-            self_insert_command3("C-g")()
+    # def goto_line():
+    #     if (checkWindow("sakura.exe", "EditorClient") or # Sakura Editor
+    #         checkWindow("sakura.exe", "SakuraView*")):   # Sakura Editor
+    #         self_insert_command3("C-j")()
+    #     else:
+    #         self_insert_command3("C-g")()
 
-    def scroll_up():
-        self_insert_command("PageUp")()
+    # def scroll_up():
+    #     self_insert_command("PageUp")()
 
-    def scroll_down():
-        self_insert_command("PageDown")()
+    # def scroll_down():
+    #     self_insert_command("PageDown")()
 
-    def recenter():
-        if (checkWindow("sakura.exe", "EditorClient") or # Sakura Editor
-            checkWindow("sakura.exe", "SakuraView*")):   # Sakura Editor
-            self_insert_command("C-h")()
+    # def recenter():
+    #     if (checkWindow("sakura.exe", "EditorClient") or # Sakura Editor
+    #         checkWindow("sakura.exe", "SakuraView*")):   # Sakura Editor
+    #         self_insert_command("C-h")()
 
     ##################################################
     ## カット / コピー / 削除 / アンドゥ
@@ -1222,133 +1226,133 @@ def configure(keymap):
     ## テキストの入れ替え
     ##################################################
 
-    def transpose_chars():
-        # Microsoft Excel の場合、セルの編集中（ウインドウのタイトル文字列が空）でなければ終了する
-        if checkWindow("EXCEL.EXE", "EXCEL*", "?*"):
-            return
+    # def transpose_chars():
+    #     # Microsoft Excel の場合、セルの編集中（ウインドウのタイトル文字列が空）でなければ終了する
+    #     if checkWindow("EXCEL.EXE", "EXCEL*", "?*"):
+    #         return
 
-        if fakeymacs.clipboard_hook:
-            # クリップボードの監視用のフックを無効にする
-            keymap.clipboard_history.enableHook(False)
+    #     if fakeymacs.clipboard_hook:
+    #         # クリップボードの監視用のフックを無効にする
+    #         keymap.clipboard_history.enableHook(False)
 
-        resetRegion()
+    #     resetRegion()
 
-        mark2(forward_char, True)()
-        setClipboardText("")
-        self_insert_command("C-c")()
-        delay(0.05)
+    #     mark2(forward_char, True)()
+    #     setClipboardText("")
+    #     self_insert_command("C-c")()
+    #     delay(0.05)
 
-        clipboard_text = getClipboardText()
+    #     clipboard_text = getClipboardText()
 
-        if len(clipboard_text) != 1:
-            if clipboard_text == "\r\n":
-                backward_char()
+    #     if len(clipboard_text) != 1:
+    #         if clipboard_text == "\r\n":
+    #             backward_char()
 
-            mark2(backward_char, False)()
-            setClipboardText("")
-            self_insert_command("C-c")()
+    #         mark2(backward_char, False)()
+    #         setClipboardText("")
+    #         self_insert_command("C-c")()
 
-        self_insert_command("Delete")()
-        backward_char()
-        yank()
-        forward_char()
+    #     self_insert_command("Delete")()
+    #     backward_char()
+    #     yank()
+    #     forward_char()
 
-        if fakeymacs.clipboard_hook:
-            # クリップボードの監視用のフックを有効にする
-            keymap.clipboard_history.enableHook(True)
+    #     if fakeymacs.clipboard_hook:
+    #         # クリップボードの監視用のフックを有効にする
+    #         keymap.clipboard_history.enableHook(True)
 
     ##################################################
     ## バッファ / ウィンドウ操作
     ##################################################
 
-    def kill_buffer():
-        self_insert_command("C-F4")()
+    # def kill_buffer():
+    #     self_insert_command("C-F4")()
 
-    def switch_to_buffer():
-        self_insert_command("C-Tab")()
+    # def switch_to_buffer():
+    #     self_insert_command("C-Tab")()
 
-    def other_window():
-        window_list = getWindowList(False)
+    # def other_window():
+    #     window_list = getWindowList(False)
 
-        if len(window_list) >= 2:
-            popWindow(window_list[1])()
+    #     if len(window_list) >= 2:
+    #         popWindow(window_list[1])()
 
     ##################################################
     ## 文字列検索 / 置換
     ##################################################
 
-    def isearch(direction):
-        if checkWindow("powershell.exe", "ConsoleWindowClass"): # PowerShell
-            self_insert_command({"backward":"C-r", "forward":"C-s"}[direction])()
-        else:
-            if fakeymacs.is_searching:
-                if checkWindow("EXCEL.EXE"): # Microsoft Excel
-                    if checkWindow(None, "EDTBX"): # 検索ウィンドウ
-                        self_insert_command({"backward":"A-S-f", "forward":"A-f"}[direction])()
-                    else:
-                        self_insert_command("C-f")()
-                else:
-                    self_insert_command({"backward":"S-F3", "forward":"F3"}[direction])()
-            else:
-                self_insert_command("C-f")()
-                fakeymacs.is_searching = True
+    # def isearch(direction):
+    #     if checkWindow("powershell.exe", "ConsoleWindowClass"): # PowerShell
+    #         self_insert_command({"backward":"C-r", "forward":"C-s"}[direction])()
+    #     else:
+    #         if fakeymacs.is_searching:
+    #             if checkWindow("EXCEL.EXE"): # Microsoft Excel
+    #                 if checkWindow(None, "EDTBX"): # 検索ウィンドウ
+    #                     self_insert_command({"backward":"A-S-f", "forward":"A-f"}[direction])()
+    #                 else:
+    #                     self_insert_command("C-f")()
+    #             else:
+    #                 self_insert_command({"backward":"S-F3", "forward":"F3"}[direction])()
+    #         else:
+    #             self_insert_command("C-f")()
+    #             fakeymacs.is_searching = True
 
-    def isearch_backward():
-        isearch("backward")
+    # def isearch_backward():
+    #     isearch("backward")
 
-    def isearch_forward():
-        isearch("forward")
+    # def isearch_forward():
+    #     isearch("forward")
 
-    def query_replace():
-        if (checkWindow("sakura.exe", "EditorClient") or  # Sakura Editor
-            checkWindow("sakura.exe", "SakuraView*")  or  # Sakura Editor
-            checkWindow(None, "HM32CLIENT")):             # Hidemaru Software
-            self_insert_command("C-r")()
-        else:
-            self_insert_command("C-h")()
+    # def query_replace():
+    #     if (checkWindow("sakura.exe", "EditorClient") or  # Sakura Editor
+    #         checkWindow("sakura.exe", "SakuraView*")  or  # Sakura Editor
+    #         checkWindow(None, "HM32CLIENT")):             # Hidemaru Software
+    #         self_insert_command("C-r")()
+    #     else:
+    #         self_insert_command("C-h")()
 
     ##################################################
     ## キーボードマクロ
     ##################################################
 
-    def kmacro_start_macro():
-        setImeStatus(0)
-        keymap.command_RecordStart()
+    # def kmacro_start_macro():
+    #     setImeStatus(0)
+    #     keymap.command_RecordStart()
 
-    def kmacro_end_macro():
-        keymap.command_RecordStop()
-        # キーボードマクロの終了キー「Ctl-x プレフィックスキー + ")"」の Ctl-x プレフィックスキーがマクロに
-        # 記録されてしまうのを対策する（キーボードマクロの終了キーの前提を「Ctl-xプレフィックスキー + ")"」
-        # としていることについては、とりあえず了承ください。）
-        if fc.ctl_x_prefix_key and len(keymap.record_seq) >= 4:
-            if (((keymap.record_seq[len(keymap.record_seq) - 1] == (ctl_x_prefix_vkey[0], True) and
-                  keymap.record_seq[len(keymap.record_seq) - 2] == (ctl_x_prefix_vkey[1], True)) or
-                 (keymap.record_seq[len(keymap.record_seq) - 1] == (ctl_x_prefix_vkey[1], True) and
-                  keymap.record_seq[len(keymap.record_seq) - 2] == (ctl_x_prefix_vkey[0], True))) and
-                keymap.record_seq[len(keymap.record_seq) - 3] == (ctl_x_prefix_vkey[1], False)):
-                   keymap.record_seq.pop()
-                   keymap.record_seq.pop()
-                   keymap.record_seq.pop()
-                   if keymap.record_seq[len(keymap.record_seq) - 1] == (ctl_x_prefix_vkey[0], False):
-                       for i in range(len(keymap.record_seq) - 1, -1, -1):
-                           if keymap.record_seq[i] == (ctl_x_prefix_vkey[0], False):
-                               keymap.record_seq.pop()
-                           else:
-                               break
-                   else:
-                       # コントロール系の入力が連続して行われる場合があるための対処
-                       keymap.record_seq.append((ctl_x_prefix_vkey[0], True))
+    # def kmacro_end_macro():
+    #     keymap.command_RecordStop()
+    #     # キーボードマクロの終了キー「Ctl-x プレフィックスキー + ")"」の Ctl-x プレフィックスキーがマクロに
+    #     # 記録されてしまうのを対策する（キーボードマクロの終了キーの前提を「Ctl-xプレフィックスキー + ")"」
+    #     # としていることについては、とりあえず了承ください。）
+    #     if fc.ctl_x_prefix_key and len(keymap.record_seq) >= 4:
+    #         if (((keymap.record_seq[len(keymap.record_seq) - 1] == (ctl_x_prefix_vkey[0], True) and
+    #               keymap.record_seq[len(keymap.record_seq) - 2] == (ctl_x_prefix_vkey[1], True)) or
+    #              (keymap.record_seq[len(keymap.record_seq) - 1] == (ctl_x_prefix_vkey[1], True) and
+    #               keymap.record_seq[len(keymap.record_seq) - 2] == (ctl_x_prefix_vkey[0], True))) and
+    #             keymap.record_seq[len(keymap.record_seq) - 3] == (ctl_x_prefix_vkey[1], False)):
+    #                keymap.record_seq.pop()
+    #                keymap.record_seq.pop()
+    #                keymap.record_seq.pop()
+    #                if keymap.record_seq[len(keymap.record_seq) - 1] == (ctl_x_prefix_vkey[0], False):
+    #                    for i in range(len(keymap.record_seq) - 1, -1, -1):
+    #                        if keymap.record_seq[i] == (ctl_x_prefix_vkey[0], False):
+    #                            keymap.record_seq.pop()
+    #                        else:
+    #                            break
+    #                else:
+    #                    # コントロール系の入力が連続して行われる場合があるための対処
+    #                    keymap.record_seq.append((ctl_x_prefix_vkey[0], True))
 
-    def kmacro_end_and_call_macro():
-        def _kmacro_end_and_call_macro():
-            # キーボードマクロの最初が IME ON の場合、この delay が必要
-            delay(0.2)
-            fakeymacs.is_playing_kmacro = True
-            setImeStatus(0)
-            keymap.command_RecordPlay()
-            fakeymacs.is_playing_kmacro = False
+    # def kmacro_end_and_call_macro():
+    #     def _kmacro_end_and_call_macro():
+    #         # キーボードマクロの最初が IME ON の場合、この delay が必要
+    #         delay(0.2)
+    #         fakeymacs.is_playing_kmacro = True
+    #         setImeStatus(0)
+    #         keymap.command_RecordPlay()
+    #         fakeymacs.is_playing_kmacro = False
 
-        keymap.delayedCall(_kmacro_end_and_call_macro, 0)
+    #     keymap.delayedCall(_kmacro_end_and_call_macro, 0)
 
     ##################################################
     ## その他
@@ -1370,14 +1374,14 @@ def configure(keymap):
             if getImeStatus():
                 fakeymacs.ime_cancel = True
 
-    def newline_and_indent():
-        self_insert_command("Enter", "Tab")()
+    # def newline_and_indent():
+    #     self_insert_command("Enter", "Tab")()
 
-    def open_line():
-        self_insert_command("Enter", "Up", "End")()
+    # def open_line():
+    #     self_insert_command("Enter", "Up", "End")()
 
-    def indent_for_tab_command():
-        self_insert_command("Tab")()
+    # def indent_for_tab_command():
+    #     self_insert_command("Tab")()
 
     def keyboard_quit(esc=True):
         resetRegion()
@@ -1399,37 +1403,37 @@ def configure(keymap):
             else:
                 fakeymacs.is_undo_mode = True
 
-    def kill_emacs():
-        # Excel のファイルを開いた直後一回目、kill_emacs が正常に動作しない。その対策。
-        self_insert_command("D-Alt", "F4")()
-        delay(0.1)
-        self_insert_command("U-Alt")()
+    # def kill_emacs():
+    #     # Excel のファイルを開いた直後一回目、kill_emacs が正常に動作しない。その対策。
+    #     self_insert_command("D-Alt", "F4")()
+    #     delay(0.1)
+    #     self_insert_command("U-Alt")()
 
-    def universal_argument():
-        if fakeymacs.is_universal_argument:
-            if fakeymacs.is_digit_argument:
-                fakeymacs.is_universal_argument = False
-            else:
-                fakeymacs.repeat_counter *= 4
-        else:
-            fakeymacs.is_universal_argument = True
-            fakeymacs.repeat_counter *= 4
+    # def universal_argument():
+    #     if fakeymacs.is_universal_argument:
+    #         if fakeymacs.is_digit_argument:
+    #             fakeymacs.is_universal_argument = False
+    #         else:
+    #             fakeymacs.repeat_counter *= 4
+    #     else:
+    #         fakeymacs.is_universal_argument = True
+    #         fakeymacs.repeat_counter *= 4
 
-    def digit_argument(number):
-        if fakeymacs.is_digit_argument:
-            fakeymacs.repeat_counter = fakeymacs.repeat_counter * 10 + number
-        else:
-            fakeymacs.repeat_counter = number
-            fakeymacs.is_digit_argument = True
+    # def digit_argument(number):
+    #     if fakeymacs.is_digit_argument:
+    #         fakeymacs.repeat_counter = fakeymacs.repeat_counter * 10 + number
+    #     else:
+    #         fakeymacs.repeat_counter = number
+    #         fakeymacs.is_digit_argument = True
 
-    def shell_command():
-        command_name = os.path.basename(fc.command_name)
-        for window in getWindowList():
-            if window.getProcessName() == command_name:
-                popWindow(window)()
-                return
+    # def shell_command():
+    #     command_name = os.path.basename(fc.command_name)
+    #     for window in getWindowList():
+    #         if window.getProcessName() == command_name:
+    #             popWindow(window)()
+    #             return
 
-        keymap.ShellExecuteCommand(None, fc.command_name, "", "")()
+    #     keymap.ShellExecuteCommand(None, fc.command_name, "", "")()
 
     ##################################################
     ## 共通関数
@@ -1718,22 +1722,22 @@ def configure(keymap):
                         w_keymap = w_keymap[key]
                     w_keymap[pos_list[-1]] = _keyCommand(None)
 
-    def define_key2(window_keymap, keys, command):
-        define_key(window_keymap, keys, command, skip_check=False)
+    # def define_key2(window_keymap, keys, command):
+    #     define_key(window_keymap, keys, command, skip_check=False)
 
-    def define_key3(window_keymap, keys, command, check_func):
-        define_key(window_keymap, keys, makeKeyCommand(window_keymap, keys, command, check_func))
+    # def define_key3(window_keymap, keys, command, check_func):
+    #     define_key(window_keymap, keys, makeKeyCommand(window_keymap, keys, command, check_func))
 
-    def mergeMultiStrokeKeymap(window_keymap1, window_keymap2, keys):
-        try:
-            key_list = kbd(keys)[0]
-            pos_list = keyPos(key_list)[0]
-            for key in pos_list:
-                window_keymap1 = window_keymap1[key]
-                window_keymap2 = window_keymap2[key]
-            window_keymap1.keymap = {**window_keymap2.keymap, **window_keymap1.keymap}
-        except:
-            pass
+    # def mergeMultiStrokeKeymap(window_keymap1, window_keymap2, keys):
+    #     try:
+    #         key_list = kbd(keys)[0]
+    #         pos_list = keyPos(key_list)[0]
+    #         for key in pos_list:
+    #             window_keymap1 = window_keymap1[key]
+    #             window_keymap2 = window_keymap2[key]
+    #         window_keymap1.keymap = {**window_keymap2.keymap, **window_keymap1.keymap}
+    #     except:
+    #         pass
 
     def getKeyCommand(window_keymap, keys):
         try:
@@ -1747,21 +1751,21 @@ def configure(keymap):
 
         return func
 
-    def makeKeyCommand(window_keymap, keys, command, check_func):
-        func = getKeyCommand(window_keymap, keys)
-        if func is None:
-            key_list = kbd(keys)[0]
-            if len(key_list) == 1:
-                func = InputKeyCommand(key_list[0])
-            else:
-                func = lambda: None
+    # def makeKeyCommand(window_keymap, keys, command, check_func):
+    #     func = getKeyCommand(window_keymap, keys)
+    #     if func is None:
+    #         key_list = kbd(keys)[0]
+    #         if len(key_list) == 1:
+    #             func = InputKeyCommand(key_list[0])
+    #         else:
+    #             func = lambda: None
 
-        def _func():
-            if check_func():
-                command()
-            else:
-                func()
-        return _func
+    #     def _func():
+    #         if check_func():
+    #             command()
+    #         else:
+    #             func()
+    #     return _func
 
     def InputKeyCommand(*key_list, usjis_conv=True):
         if usjis_conv:
@@ -1815,26 +1819,26 @@ def configure(keymap):
                         enable_emacs_ime_mode()
         return _func
 
-    def self_insert_command3(*key_list, usjis_conv=True):
-        func = self_insert_command(*key_list, usjis_conv=usjis_conv)
-        def _func():
-            func()
-            setImeStatus(0)
-        return _func
+    # def self_insert_command3(*key_list, usjis_conv=True):
+    #     func = self_insert_command(*key_list, usjis_conv=usjis_conv)
+    #     def _func():
+    #         func()
+    #         setImeStatus(0)
+    #     return _func
 
-    def digit(number):
-        def _func():
-            if fakeymacs.is_universal_argument:
-                digit_argument(number)
-            else:
-                reset_undo(reset_counter(reset_mark(repeat(self_insert_command2(str(number))))))()
-        return _func
+    # def digit(number):
+    #     def _func():
+    #         if fakeymacs.is_universal_argument:
+    #             digit_argument(number)
+    #         else:
+    #             reset_undo(reset_counter(reset_mark(repeat(self_insert_command2(str(number))))))()
+    #     return _func
 
-    def digit2(number):
-        def _func():
-            fakeymacs.is_universal_argument = True
-            digit_argument(number)
-        return _func
+    # def digit2(number):
+    #     def _func():
+    #         fakeymacs.is_universal_argument = True
+    #         digit_argument(number)
+    #     return _func
 
     def mark(func, forward_direction):
         # M-< や M-> 押下時に D-Shift が解除されないようにする対策
@@ -1985,7 +1989,7 @@ def configure(keymap):
                     if not getKeyCommand(keymap_base, mkey):
                         define_key(keymap_base, mkey, self_insert_command(mkey))
 
-    ## マルチストロークキーの設定
+    ## マルチストロークキーの設定 必要
     define_key(keymap_emacs, "Ctl-x",  keymap.defineMultiStrokeKeymap(fc.ctl_x_prefix_key))
     define_key(keymap_emacs, "C-q",    keymap.defineMultiStrokeKeymap("C-q"))
     define_key(keymap_emacs, "M-",     keymap.defineMultiStrokeKeymap("Esc"))
@@ -1993,18 +1997,18 @@ def configure(keymap):
     define_key(keymap_emacs, "M-g M-", keymap.defineMultiStrokeKeymap("M-g Esc"))
 
     ## 数字キーの設定
-    for n in range(10):
-        key = str(n)
-        define_key(keymap_emacs, key, digit(n))
-        if fc.use_ctrl_digit_key_for_digit_argument:
-            define_key(keymap_emacs, f"C-{key}", digit2(n))
-        define_key(keymap_emacs, f"M-{key}", digit2(n))
-        define_key(keymap_emacs, f"S-{key}", reset_undo(reset_counter(reset_mark(repeat(self_insert_command2(f"S-{key}"))))))
-        for mod in ["", "S-"]:
-            mkey = mod + key
-            define_key(keymap_ime, mkey, self_insert_command2(mkey))
+    # for n in range(10):
+    #     key = str(n)
+    #     define_key(keymap_emacs, key, digit(n))
+    #     if fc.use_ctrl_digit_key_for_digit_argument:
+    #         define_key(keymap_emacs, f"C-{key}", digit2(n))
+    #     define_key(keymap_emacs, f"M-{key}", digit2(n))
+    #     define_key(keymap_emacs, f"S-{key}", reset_undo(reset_counter(reset_mark(repeat(self_insert_command2(f"S-{key}"))))))
+    #     for mod in ["", "S-"]:
+    #         mkey = mod + key
+    #         define_key(keymap_ime, mkey, self_insert_command2(mkey))
 
-    ## アルファベットキーの設定
+    ## アルファベットキーの設定 // 必要
     for vkey in range(VK_A, VK_Z + 1):
         key = vkToStr(vkey)
         for mod in ["", "S-"]:
@@ -2013,8 +2017,8 @@ def configure(keymap):
             define_key(keymap_ime,   mkey, self_insert_command2(mkey))
 
     ## 特殊文字キーの設定
-    define_key(keymap_emacs, "Space"  , reset_undo(reset_counter(reset_mark(repeat(space)))))
-    define_key(keymap_emacs, "S-Space", reset_undo(reset_counter(reset_mark(repeat(self_insert_command("S-Space"))))))
+    # define_key(keymap_emacs, "Space"  , reset_undo(reset_counter(reset_mark(repeat(space)))))
+    # define_key(keymap_emacs, "S-Space", reset_undo(reset_counter(reset_mark(repeat(self_insert_command("S-Space"))))))
 
     for vkey in [VK_OEM_MINUS, VK_OEM_PLUS, VK_OEM_COMMA, VK_OEM_PERIOD, VK_OEM_1, VK_OEM_2, VK_OEM_3, VK_OEM_4, VK_OEM_5, VK_OEM_6, VK_OEM_7, VK_OEM_102]:
         key = vkToStr(vkey)
@@ -2024,40 +2028,40 @@ def configure(keymap):
             define_key(keymap_ime,   mkey, self_insert_command2(mkey))
 
     ## 10key の特殊文字キーの設定
-    for vkey in [VK_MULTIPLY, VK_ADD, VK_SUBTRACT, VK_DECIMAL, VK_DIVIDE]:
-        key = vkToStr(vkey)
-        define_key(keymap_emacs, key, reset_undo(reset_counter(reset_mark(repeat(self_insert_command2(key))))))
-        define_key(keymap_ime,   key, self_insert_command2(key))
+    # for vkey in [VK_MULTIPLY, VK_ADD, VK_SUBTRACT, VK_DECIMAL, VK_DIVIDE]:
+    #     key = vkToStr(vkey)
+    #     define_key(keymap_emacs, key, reset_undo(reset_counter(reset_mark(repeat(self_insert_command2(key))))))
+    #     define_key(keymap_ime,   key, self_insert_command2(key))
 
     ## quoted-insert キーの設定
-    for vkey in vkeys():
-        key = vkToStr(vkey)
-        for mod1, mod2, mod3, mod4 in itertools.product(["", "W-"], ["", "A-"], ["", "C-"], ["", "S-"]):
-            mkey = mod1 + mod2 + mod3 + mod4 + key
-            define_key(keymap_emacs, f"C-q {mkey}", self_insert_command(mkey))
+    # for vkey in vkeys():
+    #     key = vkToStr(vkey)
+    #     for mod1, mod2, mod3, mod4 in itertools.product(["", "W-"], ["", "A-"], ["", "C-"], ["", "S-"]):
+    #         mkey = mod1 + mod2 + mod3 + mod4 + key
+    #         define_key(keymap_emacs, f"C-q {mkey}", self_insert_command(mkey))
 
     ## Esc キーの設定
-    define_key(keymap_emacs, "C-[ C-[", reset_undo(reset_counter(escape)))
-    if fc.use_esc_as_meta:
-        define_key(keymap_emacs, "Esc Esc", reset_undo(reset_counter(escape)))
-    else:
-        define_key(keymap_emacs, "Esc", reset_undo(reset_counter(escape)))
+    # define_key(keymap_emacs, "C-[ C-[", reset_undo(reset_counter(escape)))
+    # if fc.use_esc_as_meta:
+    #     define_key(keymap_emacs, "Esc Esc", reset_undo(reset_counter(escape)))
+    # else:
+    #     define_key(keymap_emacs, "Esc", reset_undo(reset_counter(escape)))
 
     ## universal-argument キーの設定
-    define_key(keymap_emacs, "C-u", universal_argument)
+    # define_key(keymap_emacs, "C-u", universal_argument)
 
     ## 「IME の切り替え」のキー設定
-    define_key(keymap_base, "A-(25)",  toggle_input_method) # Alt-` キー
-    define_key(keymap_base, "(243)",   toggle_input_method) # <半角／全角> キー
-    define_key(keymap_base, "(244)",   toggle_input_method) # <半角／全角> キー
-    define_key(keymap_base, "(240)",   toggle_input_method) # CapsLock キー
-    define_key(keymap_base, "S-(240)", toggle_input_method) # CapsLock キー
+    # define_key(keymap_base, "A-(25)",  toggle_input_method) # Alt-` キー
+    # define_key(keymap_base, "(243)",   toggle_input_method) # <半角／全角> キー
+    # define_key(keymap_base, "(244)",   toggle_input_method) # <半角／全角> キー
+    # define_key(keymap_base, "(240)",   toggle_input_method) # CapsLock キー
+    # define_key(keymap_base, "S-(240)", toggle_input_method) # CapsLock キー
 
     ## 「ファイル操作」のキー設定
-    define_key(keymap_emacs, "Ctl-x C-f", reset_search(reset_undo(reset_counter(reset_mark(find_file)))))
-    define_key(keymap_emacs, "Ctl-x C-s", reset_search(reset_undo(reset_counter(reset_mark(save_buffer)))))
-    define_key(keymap_emacs, "Ctl-x C-w", reset_search(reset_undo(reset_counter(reset_mark(write_file)))))
-    define_key(keymap_emacs, "Ctl-x d",   reset_search(reset_undo(reset_counter(reset_mark(dired)))))
+    # define_key(keymap_emacs, "Ctl-x C-f", reset_search(reset_undo(reset_counter(reset_mark(find_file)))))
+    # define_key(keymap_emacs, "Ctl-x C-s", reset_search(reset_undo(reset_counter(reset_mark(save_buffer)))))
+    # define_key(keymap_emacs, "Ctl-x C-w", reset_search(reset_undo(reset_counter(reset_mark(write_file)))))
+    # define_key(keymap_emacs, "Ctl-x d",   reset_search(reset_undo(reset_counter(reset_mark(dired)))))
 
     ## 「カーソル移動」のキー設定
     define_key(keymap_emacs, "C-b",     reset_search(reset_undo(reset_counter(mark(repeat(backward_char), False)))))
@@ -2068,298 +2072,298 @@ def configure(keymap):
     define_key(keymap_emacs, "C-n",     reset_search(reset_undo(reset_counter(mark(repeat(next_line), True)))))
     define_key(keymap_emacs, "C-a",     reset_search(reset_undo(reset_counter(mark(move_beginning_of_line, False)))))
     define_key(keymap_emacs, "C-e",     reset_search(reset_undo(reset_counter(mark(move_end_of_line, True)))))
-    define_key(keymap_emacs, "M-<",     reset_search(reset_undo(reset_counter(mark(beginning_of_buffer, False)))))
-    define_key(keymap_emacs, "M->",     reset_search(reset_undo(reset_counter(mark(end_of_buffer, True)))))
-    define_key(keymap_emacs, "M-g g",   reset_search(reset_undo(reset_counter(reset_mark(goto_line)))))
-    define_key(keymap_emacs, "M-g M-g", reset_search(reset_undo(reset_counter(reset_mark(goto_line)))))
+    # define_key(keymap_emacs, "M-<",     reset_search(reset_undo(reset_counter(mark(beginning_of_buffer, False)))))
+    # define_key(keymap_emacs, "M->",     reset_search(reset_undo(reset_counter(mark(end_of_buffer, True)))))
+    # define_key(keymap_emacs, "M-g g",   reset_search(reset_undo(reset_counter(reset_mark(goto_line)))))
+    # define_key(keymap_emacs, "M-g M-g", reset_search(reset_undo(reset_counter(reset_mark(goto_line)))))
     # define_key(keymap_emacs, "C-l",     reset_search(reset_undo(reset_counter(recenter))))
 
-    define_key(keymap_emacs, "C-S-b", reset_search(reset_undo(reset_counter(mark2(repeat(backward_char), False)))))
-    define_key(keymap_emacs, "C-S-f", reset_search(reset_undo(reset_counter(mark2(repeat(forward_char), True)))))
-    define_key(keymap_emacs, "M-S-b", reset_search(reset_undo(reset_counter(mark2(repeat(backward_word), False)))))
+    # define_key(keymap_emacs, "C-S-b", reset_search(reset_undo(reset_counter(mark2(repeat(backward_char), False)))))
+    # define_key(keymap_emacs, "C-S-f", reset_search(reset_undo(reset_counter(mark2(repeat(forward_char), True)))))
+    # define_key(keymap_emacs, "M-S-b", reset_search(reset_undo(reset_counter(mark2(repeat(backward_word), False)))))
     # define_key(keymap_emacs, "M-S-f", reset_search(reset_undo(reset_counter(mark2(repeat(forward_word), True)))))
-    define_key(keymap_emacs, "C-S-p", reset_search(reset_undo(reset_counter(mark2(repeat(previous_line), False)))))
-    define_key(keymap_emacs, "C-S-n", reset_search(reset_undo(reset_counter(mark2(repeat(next_line), True)))))
-    define_key(keymap_emacs, "C-S-a", reset_search(reset_undo(reset_counter(mark2(move_beginning_of_line, False)))))
-    define_key(keymap_emacs, "C-S-e", reset_search(reset_undo(reset_counter(mark2(move_end_of_line, True)))))
+    # define_key(keymap_emacs, "C-S-p", reset_search(reset_undo(reset_counter(mark2(repeat(previous_line), False)))))
+    # define_key(keymap_emacs, "C-S-n", reset_search(reset_undo(reset_counter(mark2(repeat(next_line), True)))))
+    # define_key(keymap_emacs, "C-S-a", reset_search(reset_undo(reset_counter(mark2(move_beginning_of_line, False)))))
+    # define_key(keymap_emacs, "C-S-e", reset_search(reset_undo(reset_counter(mark2(move_end_of_line, True)))))
 
-    define_key(keymap_emacs, "Left",     reset_search(reset_undo(reset_counter(mark(repeat(backward_char), False)))))
-    define_key(keymap_emacs, "Right",    reset_search(reset_undo(reset_counter(mark(repeat(forward_char), True)))))
-    define_key(keymap_emacs, "C-Left",   reset_search(reset_undo(reset_counter(mark(repeat(backward_word), False)))))
-    define_key(keymap_emacs, "C-Right",  reset_search(reset_undo(reset_counter(mark(repeat(forward_word), True)))))
-    define_key(keymap_emacs, "Up",       reset_search(reset_undo(reset_counter(mark(repeat(previous_line), False)))))
-    define_key(keymap_emacs, "Down",     reset_search(reset_undo(reset_counter(mark(repeat(next_line), True)))))
-    define_key(keymap_emacs, "Home",     reset_search(reset_undo(reset_counter(mark(move_beginning_of_line, False)))))
-    define_key(keymap_emacs, "End",      reset_search(reset_undo(reset_counter(mark(move_end_of_line, True)))))
-    define_key(keymap_emacs, "C-Home",   reset_search(reset_undo(reset_counter(mark(beginning_of_buffer, False)))))
-    define_key(keymap_emacs, "C-End",    reset_search(reset_undo(reset_counter(mark(end_of_buffer, True)))))
-    define_key(keymap_emacs, "PageUP",   reset_search(reset_undo(reset_counter(mark(scroll_up, False)))))
-    define_key(keymap_emacs, "PageDown", reset_search(reset_undo(reset_counter(mark(scroll_down, True)))))
+    # define_key(keymap_emacs, "Left",     reset_search(reset_undo(reset_counter(mark(repeat(backward_char), False)))))
+    # define_key(keymap_emacs, "Right",    reset_search(reset_undo(reset_counter(mark(repeat(forward_char), True)))))
+    # define_key(keymap_emacs, "C-Left",   reset_search(reset_undo(reset_counter(mark(repeat(backward_word), False)))))
+    # define_key(keymap_emacs, "C-Right",  reset_search(reset_undo(reset_counter(mark(repeat(forward_word), True)))))
+    # define_key(keymap_emacs, "Up",       reset_search(reset_undo(reset_counter(mark(repeat(previous_line), False)))))
+    # define_key(keymap_emacs, "Down",     reset_search(reset_undo(reset_counter(mark(repeat(next_line), True)))))
+    # define_key(keymap_emacs, "Home",     reset_search(reset_undo(reset_counter(mark(move_beginning_of_line, False)))))
+    # define_key(keymap_emacs, "End",      reset_search(reset_undo(reset_counter(mark(move_end_of_line, True)))))
+    # define_key(keymap_emacs, "C-Home",   reset_search(reset_undo(reset_counter(mark(beginning_of_buffer, False)))))
+    # define_key(keymap_emacs, "C-End",    reset_search(reset_undo(reset_counter(mark(end_of_buffer, True)))))
+    # define_key(keymap_emacs, "PageUP",   reset_search(reset_undo(reset_counter(mark(scroll_up, False)))))
+    # define_key(keymap_emacs, "PageDown", reset_search(reset_undo(reset_counter(mark(scroll_down, True)))))
 
-    define_key(keymap_emacs, "S-Left",     reset_search(reset_undo(reset_counter(mark2(repeat(backward_char), False)))))
-    define_key(keymap_emacs, "S-Right",    reset_search(reset_undo(reset_counter(mark2(repeat(forward_char), True)))))
-    define_key(keymap_emacs, "C-S-Left",   reset_search(reset_undo(reset_counter(mark2(repeat(backward_word), False)))))
-    define_key(keymap_emacs, "C-S-Right",  reset_search(reset_undo(reset_counter(mark2(repeat(forward_word), True)))))
-    define_key(keymap_emacs, "S-Up",       reset_search(reset_undo(reset_counter(mark2(repeat(previous_line), False)))))
-    define_key(keymap_emacs, "S-Down",     reset_search(reset_undo(reset_counter(mark2(repeat(next_line), True)))))
-    define_key(keymap_emacs, "S-Home",     reset_search(reset_undo(reset_counter(mark2(move_beginning_of_line, False)))))
-    define_key(keymap_emacs, "S-End",      reset_search(reset_undo(reset_counter(mark2(move_end_of_line, True)))))
-    define_key(keymap_emacs, "C-S-Home",   reset_search(reset_undo(reset_counter(mark2(beginning_of_buffer, False)))))
-    define_key(keymap_emacs, "C-S-End",    reset_search(reset_undo(reset_counter(mark2(end_of_buffer, True)))))
-    define_key(keymap_emacs, "S-PageUP",   reset_search(reset_undo(reset_counter(mark2(scroll_up, False)))))
-    define_key(keymap_emacs, "S-PageDown", reset_search(reset_undo(reset_counter(mark2(scroll_down, True)))))
+    # define_key(keymap_emacs, "S-Left",     reset_search(reset_undo(reset_counter(mark2(repeat(backward_char), False)))))
+    # define_key(keymap_emacs, "S-Right",    reset_search(reset_undo(reset_counter(mark2(repeat(forward_char), True)))))
+    # define_key(keymap_emacs, "C-S-Left",   reset_search(reset_undo(reset_counter(mark2(repeat(backward_word), False)))))
+    # define_key(keymap_emacs, "C-S-Right",  reset_search(reset_undo(reset_counter(mark2(repeat(forward_word), True)))))
+    # define_key(keymap_emacs, "S-Up",       reset_search(reset_undo(reset_counter(mark2(repeat(previous_line), False)))))
+    # define_key(keymap_emacs, "S-Down",     reset_search(reset_undo(reset_counter(mark2(repeat(next_line), True)))))
+    # define_key(keymap_emacs, "S-Home",     reset_search(reset_undo(reset_counter(mark2(move_beginning_of_line, False)))))
+    # define_key(keymap_emacs, "S-End",      reset_search(reset_undo(reset_counter(mark2(move_end_of_line, True)))))
+    # define_key(keymap_emacs, "C-S-Home",   reset_search(reset_undo(reset_counter(mark2(beginning_of_buffer, False)))))
+    # define_key(keymap_emacs, "C-S-End",    reset_search(reset_undo(reset_counter(mark2(end_of_buffer, True)))))
+    # define_key(keymap_emacs, "S-PageUP",   reset_search(reset_undo(reset_counter(mark2(scroll_up, False)))))
+    # define_key(keymap_emacs, "S-PageDown", reset_search(reset_undo(reset_counter(mark2(scroll_down, True)))))
 
     ## 「カット / コピー / 削除 / アンドゥ」のキー設定
     define_key(keymap_emacs, "C-h",      reset_search(reset_undo(reset_counter(reset_mark(repeat2(delete_backward_char))))))
     define_key(keymap_emacs, "C-d",      reset_search(reset_undo(reset_counter(reset_mark(repeat2(delete_char))))))
-    define_key(keymap_emacs, "M-Delete", reset_search(reset_undo(reset_counter(reset_mark(repeat3(backward_kill_word))))))
-    define_key(keymap_emacs, "M-d",      reset_search(reset_undo(reset_counter(reset_mark(repeat3(kill_word))))))
+    # define_key(keymap_emacs, "M-Delete", reset_search(reset_undo(reset_counter(reset_mark(repeat3(backward_kill_word))))))
+    # define_key(keymap_emacs, "M-d",      reset_search(reset_undo(reset_counter(reset_mark(repeat3(kill_word))))))
     define_key(keymap_emacs, "C-k",      reset_search(reset_undo(reset_counter(reset_mark(repeat3(kill_line))))))
     define_key(keymap_emacs, "C-w",      reset_search(reset_undo(reset_counter(reset_mark(kill_region)))))
     define_key(keymap_emacs, "M-w",      reset_search(reset_undo(reset_counter(reset_mark(kill_ring_save)))))
     define_key(keymap_emacs, "C-y",      reset_search(reset_undo(reset_counter(reset_mark(repeat(yank))))))
-    define_key(keymap_emacs, "C-/",      reset_search(reset_counter(reset_mark(undo))))
-    define_key(keymap_emacs, "Ctl-x u",  reset_search(reset_counter(reset_mark(undo))))
+    # define_key(keymap_emacs, "C-/",      reset_search(reset_counter(reset_mark(undo))))
+    #define_key(keymap_emacs, "Ctl-x u",  reset_search(reset_counter(reset_mark(undo))))
 
-    define_key(keymap_emacs, "Back",      reset_search(reset_undo(reset_counter(reset_mark(repeat2(delete_backward_char))))))
-    define_key(keymap_emacs, "Delete",    reset_search(reset_undo(reset_counter(reset_mark(repeat2(delete_char))))))
-    define_key(keymap_emacs, "C-Back",    reset_search(reset_undo(reset_counter(reset_mark(repeat3(backward_kill_word))))))
-    define_key(keymap_emacs, "C-Delete",  reset_search(reset_undo(reset_counter(reset_mark(repeat3(kill_word))))))
-    define_key(keymap_emacs, "C-c",       reset_search(reset_undo(reset_counter(reset_mark(kill_ring_save)))))
-    define_key(keymap_emacs, "C-v",       reset_search(reset_undo(reset_counter(reset_mark(repeat(yank)))))) # scroll_key の設定で上書きされない場合
-    define_key(keymap_emacs, "C-z",       reset_search(reset_counter(reset_mark(undo))))
-    define_key(keymap_emacs, "C-_",       reset_search(reset_undo(reset_counter(reset_mark(undo)))))
-    define_key(keymap_emacs, "C-@",       reset_search(reset_undo(reset_counter(set_mark_command))))
+    # define_key(keymap_emacs, "Back",      reset_search(reset_undo(reset_counter(reset_mark(repeat2(delete_backward_char))))))
+    # define_key(keymap_emacs, "Delete",    reset_search(reset_undo(reset_counter(reset_mark(repeat2(delete_char))))))
+    # define_key(keymap_emacs, "C-Back",    reset_search(reset_undo(reset_counter(reset_mark(repeat3(backward_kill_word))))))
+    # define_key(keymap_emacs, "C-Delete",  reset_search(reset_undo(reset_counter(reset_mark(repeat3(kill_word))))))
+    # define_key(keymap_emacs, "C-c",       reset_search(reset_undo(reset_counter(reset_mark(kill_ring_save)))))
+    # define_key(keymap_emacs, "C-v",       reset_search(reset_undo(reset_counter(reset_mark(repeat(yank)))))) # scroll_key の設定で上書きされない場合
+    #define_key(keymap_emacs, "C-z",       reset_search(reset_counter(reset_mark(undo))))
+    # define_key(keymap_emacs, "C-_",       reset_search(reset_undo(reset_counter(reset_mark(undo)))))
+    # define_key(keymap_emacs, "C-@",       reset_search(reset_undo(reset_counter(set_mark_command))))
     define_key(keymap_emacs, "C-Space",   reset_search(reset_undo(reset_counter(set_mark_command))))
-    define_key(keymap_emacs, "Ctl-x h",   reset_search(reset_undo(reset_counter(mark_whole_buffer))))
-    define_key(keymap_emacs, "Ctl-x C-p", reset_search(reset_undo(reset_counter(mark_page))))
+    #define_key(keymap_emacs, "Ctl-x h",   reset_search(reset_undo(reset_counter(mark_whole_buffer))))
+    # define_key(keymap_emacs, "Ctl-x C-p", reset_search(reset_undo(reset_counter(mark_page))))
 
-    ## 「テキストの入れ替え」のキー設定
-    define_key(keymap_emacs, "C-t", reset_search(reset_undo(reset_counter(reset_mark(transpose_chars)))))
+    # ## 「テキストの入れ替え」のキー設定
+    # define_key(keymap_emacs, "C-t", reset_search(reset_undo(reset_counter(reset_mark(transpose_chars)))))
 
-    ## 「バッファ / ウィンドウ操作」のキー設定
-    define_key(keymap_emacs, "M-k",     reset_search(reset_undo(reset_counter(reset_mark(kill_buffer)))))
-    define_key(keymap_emacs, "Ctl-x k", reset_search(reset_undo(reset_counter(reset_mark(kill_buffer)))))
-    define_key(keymap_emacs, "Ctl-x b", reset_search(reset_undo(reset_counter(reset_mark(switch_to_buffer)))))
-    define_key(keymap_emacs, "Ctl-x o", reset_search(reset_undo(reset_counter(reset_mark(other_window)))))
+    # ## 「バッファ / ウィンドウ操作」のキー設定
+    # define_key(keymap_emacs, "M-k",     reset_search(reset_undo(reset_counter(reset_mark(kill_buffer)))))
+    # define_key(keymap_emacs, "Ctl-x k", reset_search(reset_undo(reset_counter(reset_mark(kill_buffer)))))
+    # define_key(keymap_emacs, "Ctl-x b", reset_search(reset_undo(reset_counter(reset_mark(switch_to_buffer)))))
+    # define_key(keymap_emacs, "Ctl-x o", reset_search(reset_undo(reset_counter(reset_mark(other_window)))))
 
-    ## 「文字列検索 / 置換」のキー設定
-    define_key(keymap_emacs, "C-r", reset_undo(reset_counter(reset_mark(isearch_backward))))
-    define_key(keymap_emacs, "C-s", reset_undo(reset_counter(reset_mark(isearch_forward))))
-    define_key(keymap_emacs, "M-%", reset_search(reset_undo(reset_counter(reset_mark(query_replace)))))
+    # ## 「文字列検索 / 置換」のキー設定
+    # define_key(keymap_emacs, "C-r", reset_undo(reset_counter(reset_mark(isearch_backward))))
+    # define_key(keymap_emacs, "C-s", reset_undo(reset_counter(reset_mark(isearch_forward))))
+    # define_key(keymap_emacs, "M-%", reset_search(reset_undo(reset_counter(reset_mark(query_replace)))))
 
-    ## 「キーボードマクロ」のキー設定
-    define_key(keymap_emacs, "Ctl-x (", kmacro_start_macro)
-    define_key(keymap_emacs, "Ctl-x )", kmacro_end_macro)
-    define_key(keymap_emacs, "Ctl-x e", reset_search(reset_undo(reset_counter(repeat(kmacro_end_and_call_macro)))))
+    # ## 「キーボードマクロ」のキー設定
+    # define_key(keymap_emacs, "Ctl-x (", kmacro_start_macro)
+    # define_key(keymap_emacs, "Ctl-x )", kmacro_end_macro)
+    # define_key(keymap_emacs, "Ctl-x e", reset_search(reset_undo(reset_counter(repeat(kmacro_end_and_call_macro)))))
 
-    ## 「その他」のキー設定
-    define_key(keymap_emacs, "Enter",     reset_undo(reset_counter(reset_mark(repeat(newline)))))
+    # ## 「その他」のキー設定
+    # define_key(keymap_emacs, "Enter",     reset_undo(reset_counter(reset_mark(repeat(newline)))))
     define_key(keymap_emacs, "C-m",       reset_undo(reset_counter(reset_mark(repeat(newline)))))
-    define_key(keymap_emacs, "C-j",       reset_undo(reset_counter(reset_mark(newline_and_indent))))
-    define_key(keymap_emacs, "C-o",       reset_undo(reset_counter(reset_mark(repeat(open_line)))))
-    define_key(keymap_emacs, "Tab",       reset_undo(reset_counter(reset_mark(repeat(indent_for_tab_command)))))
+    # define_key(keymap_emacs, "C-j",       reset_undo(reset_counter(reset_mark(newline_and_indent))))
+    # define_key(keymap_emacs, "C-o",       reset_undo(reset_counter(reset_mark(repeat(open_line)))))
+    # define_key(keymap_emacs, "Tab",       reset_undo(reset_counter(reset_mark(repeat(indent_for_tab_command)))))
     define_key(keymap_emacs, "C-g",       reset_search(reset_counter(reset_mark(keyboard_quit))))
-    define_key(keymap_emacs, "Ctl-x C-c", reset_search(reset_undo(reset_counter(reset_mark(kill_emacs)))))
-    define_key(keymap_emacs, "M-!",       reset_search(reset_undo(reset_counter(reset_mark(shell_command)))))
+    # define_key(keymap_emacs, "Ctl-x C-c", reset_search(reset_undo(reset_counter(reset_mark(kill_emacs)))))
+    # define_key(keymap_emacs, "M-!",       reset_search(reset_undo(reset_counter(reset_mark(shell_command)))))
 
 
     ###########################################################################
     ## Emacs 日本語入力モードの設定
     ###########################################################################
-    if fc.use_emacs_ime_mode:
 
-        def is_emacs_ime_mode(window):
-            if fakeymacs.ei_last_window is window:
-                return True
-            else:
-                fakeymacs.ei_last_window = None
-                return False
+    # keymap_eiを設定しないとエラーになる。
 
-        def is_emacs_ime_mode2(window):
-            if is_emacs_ime_mode(window):
-                ei_popBalloon(1)
-                return True
-            else:
-                ei_popBalloon(0)
-                return False
+    keymap_ei = None
+    # if fc.use_emacs_ime_mode:
+        # def is_emacs_ime_mode(window):
+        #     if fakeymacs.ei_last_window is window:
+        #         return True
+        #     else:
+        #         fakeymacs.ei_last_window = None
+        #         return False
 
-        keymap_ei = keymap.defineWindowKeymap(check_func=is_emacs_ime_mode2)
+        # def is_emacs_ime_mode2(window):
+        #     if is_emacs_ime_mode(window):
+        #         ei_popBalloon(1)
+        #         return True
+        #     else:
+        #         ei_popBalloon(0)
+        #         return False
+
+        #  # keymap.defineWindowKeymap(check_func=is_emacs_ime_mode2)
 
         # Emacs 日本語入力モードが開始されたときのウィンドウオブジェクトを格納する変数を初期化する
-        fakeymacs.ei_last_window = None
+        # fakeymacs.ei_last_window = None
 
         ##################################################
         ## Emacs 日本語入力モード の切り替え
         ##################################################
 
-        def enable_emacs_ime_mode(delay=0):
-            fakeymacs.ei_last_window = keymap.getWindow()
-            ei_updateKeymap(delay)
+        # def enable_emacs_ime_mode(delay=0):
+        #     fakeymacs.ei_last_window = keymap.getWindow()
+        #     ei_updateKeymap(delay)
 
-        def disable_emacs_ime_mode():
-            fakeymacs.ei_last_window = None
-            ei_updateKeymap(0)
+        # def disable_emacs_ime_mode():
+        #     fakeymacs.ei_last_window = None
+        #     ei_updateKeymap(0)
 
         ##################################################
         ## IME の切り替え（Emacs 日本語入力モード用）
         ##################################################
 
-        def ei_enable_input_method():
-            # IME の状態のバルーンヘルプを表示するために敢えてコールする
-            enable_input_method()
+        # def ei_enable_input_method():
+        #     # IME の状態のバルーンヘルプを表示するために敢えてコールする
+        #     enable_input_method()
 
-        def ei_disable_input_method():
-            disable_emacs_ime_mode()
-            disable_input_method()
+        # def ei_disable_input_method():
+        #     disable_emacs_ime_mode()
+        #     disable_input_method()
 
-        def ei_enable_input_method2(window_keymap, key):
-            func = getKeyCommand(window_keymap, key)
-            if func is None:
-                if key.startswith("O-"):
-                    func = self_insert_command("(28)") # <変換> キーを発行
-                else:
-                    func = self_insert_command(key)
+        # def ei_enable_input_method2(window_keymap, key):
+        #     func = getKeyCommand(window_keymap, key)
+        #     if func is None:
+        #         if key.startswith("O-"):
+        #             func = self_insert_command("(28)") # <変換> キーを発行
+        #         else:
+        #             func = self_insert_command(key)
 
-            def _func():
-                if (fakeymacs.last_keys[0] is keymap_ei and
-                    fakeymacs.last_keys[1] in ["Back", "C-h"]):
-                    ei_enable_input_method()
-                    fakeymacs.update_last_keys = False
-                else:
-                    func()
-            return _func
+        #     def _func():
+        #         if (fakeymacs.last_keys[0] is keymap_ei and
+        #             fakeymacs.last_keys[1] in ["Back", "C-h"]):
+        #             ei_enable_input_method()
+        #             fakeymacs.update_last_keys = False
+        #         else:
+        #             func()
+        #     return _func
 
-        def ei_disable_input_method2(window_keymap, key):
-            func = getKeyCommand(window_keymap, key)
-            if func is None:
-                if key.startswith("O-"):
-                    func = self_insert_command("(29)") # <無変換> キーを発行
-                else:
-                    func = self_insert_command(key)
+        # def ei_disable_input_method2(window_keymap, key):
+        #     func = getKeyCommand(window_keymap, key)
+        #     if func is None:
+        #         if key.startswith("O-"):
+        #             func = self_insert_command("(29)") # <無変換> キーを発行
+        #         else:
+        #             func = self_insert_command(key)
 
-            def _func():
-                if (fakeymacs.last_keys[0] is keymap_ei and
-                    fakeymacs.last_keys[1] in ["Back", "C-h"]):
-                    ei_disable_input_method()
-                    fakeymacs.update_last_keys = False
-                else:
-                    func()
-            return _func
+        #     def _func():
+        #         if (fakeymacs.last_keys[0] is keymap_ei and
+        #             fakeymacs.last_keys[1] in ["Back", "C-h"]):
+        #             ei_disable_input_method()
+        #             fakeymacs.update_last_keys = False
+        #         else:
+        #             func()
+        #     return _func
 
         ##################################################
         ## その他（Emacs 日本語入力モード用）
         ##################################################
 
-        def ei_newline():
-            self_insert_command("Enter")()
-            fakeymacs.ime_cancel = True
-            disable_emacs_ime_mode()
+        # def ei_newline():
+        #     self_insert_command("Enter")()
+        #     fakeymacs.ime_cancel = True
+        #     disable_emacs_ime_mode()
 
-        def ei_keyboard_quit():
-            escape()
-            disable_emacs_ime_mode()
+        # def ei_keyboard_quit():
+        #     escape()
+        #     disable_emacs_ime_mode()
 
         ##################################################
         ## 共通関数（Emacs 日本語入力モード用）
         ##################################################
 
-        def ei_popBalloon(ime_mode_status):
-            if not fakeymacs.is_playing_kmacro:
-                if fc.emacs_ime_mode_balloon_message:
-                    # Qt5*QWindowIcon にマッチするクラスをもつアプリは入力文字にバルーンヘルプが
-                    # 被るので、バルーンヘルプの表示対象から外す
-                    if not checkWindow(None, "Qt5*QWindowIcon"):
-                        if ime_mode_status:
-                            try:
-                                keymap.popBalloon("emacs_ime_mode", fc.emacs_ime_mode_balloon_message)
-                            except:
-                                pass
-                        else:
-                            keymap.closeBalloon("emacs_ime_mode")
+        # def ei_popBalloon(ime_mode_status):
+        #     if not fakeymacs.is_playing_kmacro:
+        #         if fc.emacs_ime_mode_balloon_message:
+        #             # Qt5*QWindowIcon にマッチするクラスをもつアプリは入力文字にバルーンヘルプが
+        #             # 被るので、バルーンヘルプの表示対象から外す
+        #             if not checkWindow(None, "Qt5*QWindowIcon"):
+        #                 if ime_mode_status:
+        #                     try:
+        #                         keymap.popBalloon("emacs_ime_mode", fc.emacs_ime_mode_balloon_message)
+        #                     except:
+        #                         pass
+        #                 else:
+        #                     keymap.closeBalloon("emacs_ime_mode")
 
-        def ei_updateKeymap(delay):
-            if fakeymacs.is_playing_kmacro:
-                keymap.updateKeymap()
-            else:
-                keymap.delayedCall(keymap.updateKeymap, delay)
+        # def ei_updateKeymap(delay):
+        #     if fakeymacs.is_playing_kmacro:
+        #         keymap.updateKeymap()
+        #     else:
+        #         keymap.delayedCall(keymap.updateKeymap, delay)
 
         ##################################################
         ## キーバインド（Emacs 日本語入力モード用）
         ##################################################
 
         ## 「IME の切り替え」のキー設定
-        define_key(keymap_ei, "A-(25)",  ei_disable_input_method) # Alt-` キー
-        define_key(keymap_ei, "(243)",   ei_disable_input_method) # <半角／全角> キー
-        define_key(keymap_ei, "(244)",   ei_disable_input_method) # <半角／全角> キー
-        define_key(keymap_ei, "(240)",   ei_disable_input_method) # CapsLock キー
-        define_key(keymap_ei, "S-(240)", ei_disable_input_method) # CapsLock キー
+        # define_key(keymap_ei, "A-(25)",  ei_disable_input_method) # Alt-` キー
+        # define_key(keymap_ei, "(243)",   ei_disable_input_method) # <半角／全角> キー
+        # define_key(keymap_ei, "(244)",   ei_disable_input_method) # <半角／全角> キー
+        # define_key(keymap_ei, "(240)",   ei_disable_input_method) # CapsLock キー
+        # define_key(keymap_ei, "S-(240)", ei_disable_input_method) # CapsLock キー
 
-        ## Esc キーの設定
-        define_key(keymap_ei, "Esc", escape)
-        define_key(keymap_ei, "C-[", escape)
+        # ## Esc キーの設定
+        # define_key(keymap_ei, "Esc", escape)
+        # define_key(keymap_ei, "C-[", escape)
 
-        ## 「カーソル移動」のキー設定
-        define_key(keymap_ei, "C-b", backward_char)
-        define_key(keymap_ei, "C-f", forward_char)
-        define_key(keymap_ei, "C-p", previous_line)
-        define_key(keymap_ei, "C-n", next_line)
-        define_key(keymap_ei, "C-a", move_beginning_of_line)
-        define_key(keymap_ei, "C-e", move_end_of_line)
+        # ## 「カーソル移動」のキー設定
+        # define_key(keymap_ei, "C-b", backward_char)
+        # define_key(keymap_ei, "C-f", forward_char)
+        # define_key(keymap_ei, "C-p", previous_line)
+        # define_key(keymap_ei, "C-n", next_line)
+        # define_key(keymap_ei, "C-a", move_beginning_of_line)
+        # define_key(keymap_ei, "C-e", move_end_of_line)
 
-        ## 「カット / コピー / 削除 / アンドゥ」のキー設定
-        define_key(keymap_ei, "C-h",  delete_backward_char)
-        define_key(keymap_ei, "Back", delete_backward_char) # キーの記録を残すために敢えて設定
-        define_key(keymap_ei, "C-d",  delete_char)
+        # ## 「カット / コピー / 削除 / アンドゥ」のキー設定
+        # define_key(keymap_ei, "C-h",  delete_backward_char)
+        # define_key(keymap_ei, "Back", delete_backward_char) # キーの記録を残すために敢えて設定
+        # define_key(keymap_ei, "C-d",  delete_char)
 
-        ## 「その他」のキー設定
-        define_key(keymap_ei, "Enter", ei_newline)
-        define_key(keymap_ei, "C-m",   ei_newline)
-        define_key(keymap_ei, "C-g",   ei_keyboard_quit)
+        # ## 「その他」のキー設定
+        # define_key(keymap_ei, "Enter", ei_newline)
+        # define_key(keymap_ei, "C-m",   ei_newline)
+        # define_key(keymap_ei, "C-g",   ei_keyboard_quit)
 
         ## 「スクロール」のキー設定
-        if fc.scroll_key:
-            if fc.scroll_key[0]:
-                define_key(keymap_ei, fc.scroll_key[0].replace("M-", "A-"), scroll_up)
-            if fc.scroll_key[1]:
-                define_key(keymap_ei, fc.scroll_key[1].replace("M-", "A-"), scroll_down)
+        # if fc.scroll_key:
+        #     if fc.scroll_key[0]:
+        #         define_key(keymap_ei, fc.scroll_key[0].replace("M-", "A-"), scroll_up)
+        #     if fc.scroll_key[1]:
+        #         define_key(keymap_ei, fc.scroll_key[1].replace("M-", "A-"), scroll_down)
 
-        # 「IME のショートカットの置き換え」のキー設定
-        for replace_key, original_key in fc.emacs_ime_mode_key:
-            define_key(keymap_ei, replace_key, self_insert_command(original_key))
+        # # 「IME のショートカットの置き換え」のキー設定
+        # for replace_key, original_key in fc.emacs_ime_mode_key:
+        #     define_key(keymap_ei, replace_key, self_insert_command(original_key))
 
-        # この時点の keymap_ei を複製する
-        keymap_ei_dup = copy.deepcopy(keymap_ei)
+        # # この時点の keymap_ei を複製する
+        # keymap_ei_dup = copy.deepcopy(keymap_ei)
 
-        ## 「IME の切り替え」のキー設定
-        for key in fc.toggle_input_method_key:
-            define_key(keymap_ei, key, ei_disable_input_method2(keymap_ei_dup, key))
+        # ## 「IME の切り替え」のキー設定
+        # for key in fc.toggle_input_method_key:
+        #     define_key(keymap_ei, key, ei_disable_input_method2(keymap_ei_dup, key))
 
-        ## 「IME の切り替え」のキー設定
-        for disable_key, enable_key in fc.set_input_method_key:
-            if disable_key:
-                define_key(keymap_ei, disable_key, ei_disable_input_method2(keymap_ei_dup, disable_key))
-            if enable_key:
-                define_key(keymap_ei, enable_key,  ei_enable_input_method2(keymap_ei_dup, enable_key))
+        # ## 「IME の切り替え」のキー設定
+        # for disable_key, enable_key in fc.set_input_method_key:
+        #     if disable_key:
+        #         define_key(keymap_ei, disable_key, ei_disable_input_method2(keymap_ei_dup, disable_key))
+        #     if enable_key:
+        #         define_key(keymap_ei, enable_key,  ei_enable_input_method2(keymap_ei_dup, enable_key))
 
 
     ###########################################################################
     ## 「Emacs キーバインドの切り替え」のキー設定
     ###########################################################################
 
-    def is_global_target(window):
-        if (window.getClassName() not in fc.emacs_target_class and
-            window.getProcessName() in fc.transparent_target):
-            return False
-        else:
-            return True
+    # def is_global_target(window):
+    #     if (window.getClassName() not in fc.emacs_target_class and
+    #         window.getProcessName() in fc.transparent_target):
+    #         return False
+    #     else:
+    #         return True
 
-    keymap_global = keymap.defineWindowKeymap(check_func=is_global_target)
+    # keymap_global = keymap.defineWindowKeymap(check_func=is_global_target)
 
-    define_key(keymap_global, fc.toggle_emacs_keybind_key, toggle_emacs_keybind)
-
-
-
+    # define_key(keymap_global, fc.toggle_emacs_keybind_key, toggle_emacs_keybind)
 
     def is_task_switching_window(window):
         if (window.getProcessName() == "explorer.exe" and
@@ -2373,8 +2377,6 @@ def configure(keymap):
 
     keymap_tsw = keymap.defineWindowKeymap(check_func=is_task_switching_window)
 
-
-
     def is_list_window(window):
         if window.getClassName() == "KeyhacWindowClass" and window.getText() != "Keyhac":
             fakeymacs.lw_is_searching = False
@@ -2384,12 +2386,10 @@ def configure(keymap):
 
     keymap_lw = keymap.defineWindowKeymap(check_func=is_list_window)
 
+    # keymap.window_keymap_list.remove(keymap_global)
+    # keymap.window_keymap_list.remove(keymap_tsw)
+    # keymap.window_keymap_list.remove(keymap_lw)
 
-
-    keymap.window_keymap_list.remove(keymap_global)
-    keymap.window_keymap_list.remove(keymap_tsw)
-    keymap.window_keymap_list.remove(keymap_lw)
-
-    keymap.window_keymap_list.append(keymap_global)
-    keymap.window_keymap_list.append(keymap_tsw)
-    keymap.window_keymap_list.append(keymap_lw)
+    # keymap.window_keymap_list.append(keymap_global)
+    # keymap.window_keymap_list.append(keymap_tsw)
+    # keymap.window_keymap_list.append(keymap_lw)
